@@ -6,3 +6,4 @@ langchain-community==0.3.7
 langgraph==0.2.39
 chromabd==0.5.15
 aiosqlite==0.20.0
+pydantic==2.9.2
