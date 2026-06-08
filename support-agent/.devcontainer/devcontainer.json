@@ -4,5 +4,10 @@
     "features" : {
         "ghcr.io/devcontainer/features/node:1" : {"version": "20"}
     },
-    "postCreateCommand": "pip install -r requirements.txt && bash scripts/setup.sh"
+    "postCreateCommand": "pip install -r requirements.txt && bash scripts/setup.sh",
+    "forwardPorts": [8000, 11434],
+    "portsAttributes": {
+        "8000": {"label": "FastAPI Backend"},
+        "11434": {"label": "Ollama LLM"}
+    }
 }
