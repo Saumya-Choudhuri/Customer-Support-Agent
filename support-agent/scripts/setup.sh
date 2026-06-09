@@ -12,3 +12,5 @@ olllama pull llama3.2:3b
 
 echo "Pulling embedding model (nomic-embed-text — ~274MB, free)..."
 ollama pull nomic-embed-text
+
+echo "Setup complete. Models ready."
