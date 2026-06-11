@@ -86,3 +86,8 @@ JSON array only, no other text:"""
         logger.info(f"Stored {len(facts)} memories for user {user_id}")
     except Exception as e:
         logger.warning(f"Memory extraction failed: {e}")
+
+async def clear_user_memories(user_id: str):
+    async with aiosqlite.connect(DB_PATH) as db:
+        await db.execute("DELETE FROM memories WHERE user_id = ?", (user_id,))
+        await db.commit()
