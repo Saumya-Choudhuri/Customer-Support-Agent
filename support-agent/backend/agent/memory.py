@@ -46,3 +46,17 @@ async def get_user_memories(user_id: str, limit: int = 10) -> str:
 
     facts = [f"[{row[1]}] {row[0]}" for row in rows]
     return "What I remember about this customer:\n" + "\n".join(facts)
+
+async def extract_and_store_memories(
+    user_id: str, session_id: str, conversation: str
+):
+    """After a conversation ends, extract memorable facts using the LLM."""
+    extraction_prompt = f"""
+Extract important facts about the customer from this support conversation.
+Return ONLY a JSON array of objects with keys "fact" and "category".
+Category must be one of: preference, issue, product, contact, complaint.
+Only extract genuinely useful facts for future support sessions.
+Return [] if nothing worth remembering.
+
+Conversation:
+{conversation}
