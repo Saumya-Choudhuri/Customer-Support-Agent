@@ -60,3 +60,29 @@ Return [] if nothing worth remembering.
 
 Conversation:
 {conversation}
+
+JSON array only, no other text:"""
+
+    try:
+        response = llm.invoke(extraction_prompt)
+        # Clean up response to extract JSON
+        raw = response.strip()
+        start = raw.find("[")
+        end = raw.rfind("]") + 1
+        if start == -1:
+            return
+        facts = json.loads(raw[start:end])
+
+        async with aiosqlite.connect(DB_PATH) as db:
+            for item in facts:
+                if "fact" in item and "category" in item:
+                    await db.execute(
+                        "INSERT INTO memories (user_id, fact, category, created_at, session_id) "
+                        "VALUES (?, ?, ?, ?, ?)",
+                        (user_id, item["fact"], item["category"],
+                         datetime.utcnow().isoformat(), session_id)
+                    )
+            await db.commit()
+        logger.info(f"Stored {len(facts)} memories for user {user_id}")
+    except Exception as e:
+        logger.warning(f"Memory extraction failed: {e}")
