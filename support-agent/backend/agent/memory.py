@@ -30,3 +30,19 @@ async def init_db():
         """)
         await db.commit()
     logger.info("Memory DB initialised")
+
+async def get_user_memories(user_id: str, limit: int = 10) -> str:
+    """Retrieve stored facts about a user for context injection."""
+    async with aiosqlite.connect(DB_PATH) as db:
+        async with db.execute(
+            "SELECT fact, category, created_at FROM memories "
+            "WHERE user_id = ? ORDER BY created_at DESC LIMIT ?",
+            (user_id, limit)
+        ) as cursor:
+            rows = await cursor.fetchall()
+
+    if not rows:
+        return ""
+
+    facts = [f"[{row[1]}] {row[0]}" for row in rows]
+    return "What I remember about this customer:\n" + "\n".join(facts)
