@@ -90,4 +90,4 @@ JSON array only, no other text:"""
 async def clear_user_memories(user_id: str):
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute("DELETE FROM memories WHERE user_id = ?", (user_id,))
-        await db.commit
+        await db.commit ()
