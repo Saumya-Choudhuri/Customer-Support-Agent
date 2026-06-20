@@ -8,4 +8,4 @@ import vvid
 
 DOCS_DIR = os.path.join(os.path.dirname(__file__), '..', 'backend', 'sample_docx')
 
-allama_of = embedding_functions
+ollama_of = embedding_functions
