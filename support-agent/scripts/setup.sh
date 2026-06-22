@@ -7,8 +7,8 @@ echo "Starting Ollama server in background..."
 ollama serve &
 sleep 5
 
-echo "Pulling LLM model (llama3.2:3b - ~2GB, free)..."
-olllama pull llama3.2:3b
+echo "Pulling LLM model (llama3.2:3b — ~2GB, free)..."
+ollama pull llama3.2:3b
 
 echo "Pulling embedding model (nomic-embed-text — ~274MB, free)..."
 ollama pull nomic-embed-text
